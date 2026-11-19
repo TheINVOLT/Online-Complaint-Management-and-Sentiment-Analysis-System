@@ -1,0 +1,17 @@
+{
+  "source_file": "complaints_processed.csv",
+  "source_size_bytes": 99463046,
+  "record_count": 162421,
+  "valid_narratives": 162411,
+  "missing_narratives": 10,
+  "category_counts": {
+    "credit_reporting": 91179,
+    "debt_collection": 23150,
+    "mortgages_and_loans": 18990,
+    "credit_card": 15566,
+    "retail_banking": 13536
+  },
+  "category_count": 5,
+  "date_analysis_available": false,
+  "date_note": "The source CSV contains product and narrative columns but no complaint date field; historical monthly trends cannot be calculated from this dataset."
+}

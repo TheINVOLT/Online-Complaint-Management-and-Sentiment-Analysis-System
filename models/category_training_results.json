@@ -1,0 +1,161 @@
+{
+  "selected_model": "Linear SVM",
+  "models": {
+    "Multinomial Naive Bayes": {
+      "accuracy": 0.6197079033568949,
+      "macro_precision": 0.8780053285587043,
+      "macro_recall": 0.31048401627497957,
+      "macro_f1": 0.33903800341932916,
+      "classification_report": "                     precision    recall  f1-score   support\n\n        credit_card       0.93      0.07      0.12      3891\n   credit_reporting       0.60      1.00      0.75     22793\n    debt_collection       0.94      0.09      0.17      5787\nmortgages_and_loans       0.98      0.19      0.32      4748\n     retail_banking       0.94      0.20      0.33      3384\n\n           accuracy                           0.62     40603\n          macro avg       0.88      0.31      0.34     40603\n       weighted avg       0.75      0.62      0.52     40603\n",
+      "confusion_matrix": [
+        [
+          257,
+          3590,
+          13,
+          0,
+          31
+        ],
+        [
+          5,
+          22768,
+          15,
+          3,
+          2
+        ],
+        [
+          1,
+          5229,
+          547,
+          10,
+          0
+        ],
+        [
+          3,
+          3819,
+          9,
+          906,
+          11
+        ],
+        [
+          9,
+          2687,
+          0,
+          4,
+          684
+        ]
+      ],
+      "labels": [
+        "credit_card",
+        "credit_reporting",
+        "debt_collection",
+        "mortgages_and_loans",
+        "retail_banking"
+      ]
+    },
+    "Logistic Regression": {
+      "accuracy": 0.8676945053321183,
+      "macro_precision": 0.8136688549371682,
+      "macro_recall": 0.8733679656635305,
+      "macro_f1": 0.8403688593054334,
+      "classification_report": "                     precision    recall  f1-score   support\n\n        credit_card       0.72      0.85      0.78      3891\n   credit_reporting       0.96      0.86      0.91     22793\n    debt_collection       0.76      0.85      0.80      5787\nmortgages_and_loans       0.78      0.89      0.83      4748\n     retail_banking       0.85      0.91      0.88      3384\n\n           accuracy                           0.87     40603\n          macro avg       0.81      0.87      0.84     40603\n       weighted avg       0.88      0.87      0.87     40603\n",
+      "confusion_matrix": [
+        [
+          3322,
+          145,
+          91,
+          55,
+          278
+        ],
+        [
+          786,
+          19695,
+          1338,
+          855,
+          119
+        ],
+        [
+          177,
+          423,
+          4895,
+          238,
+          54
+        ],
+        [
+          111,
+          173,
+          135,
+          4237,
+          92
+        ],
+        [
+          209,
+          12,
+          22,
+          59,
+          3082
+        ]
+      ],
+      "labels": [
+        "credit_card",
+        "credit_reporting",
+        "debt_collection",
+        "mortgages_and_loans",
+        "retail_banking"
+      ]
+    },
+    "Linear SVM": {
+      "accuracy": 0.9050562766298057,
+      "macro_precision": 0.8680507086907561,
+      "macro_recall": 0.8793816406409274,
+      "macro_f1": 0.8735638891035823,
+      "classification_report": "                     precision    recall  f1-score   support\n\n        credit_card       0.80      0.84      0.82      3891\n   credit_reporting       0.95      0.94      0.95     22793\n    debt_collection       0.84      0.83      0.84      5787\nmortgages_and_loans       0.87      0.87      0.87      4748\n     retail_banking       0.88      0.91      0.89      3384\n\n           accuracy                           0.91     40603\n          macro avg       0.87      0.88      0.87     40603\n       weighted avg       0.91      0.91      0.91     40603\n",
+      "confusion_matrix": [
+        [
+          3284,
+          218,
+          87,
+          55,
+          247
+        ],
+        [
+          346,
+          21426,
+          650,
+          307,
+          64
+        ],
+        [
+          150,
+          559,
+          4827,
+          208,
+          43
+        ],
+        [
+          107,
+          269,
+          150,
+          4148,
+          74
+        ],
+        [
+          195,
+          21,
+          30,
+          75,
+          3063
+        ]
+      ],
+      "labels": [
+        "credit_card",
+        "credit_reporting",
+        "debt_collection",
+        "mortgages_and_loans",
+        "retail_banking"
+      ]
+    }
+  },
+  "number_of_records": 162411,
+  "number_of_categories": 5,
+  "data_note": "Real labelled CSV dataset. Check its source and licence before reporting academic results."
+}
