@@ -1,0 +1,150 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<a href="javascript:history.back()" class="text-decoration-none">← Back</a>
+
+<div class="surface p-4 mt-3">
+    <div class="d-flex justify-content-between flex-wrap gap-2">
+        <div>
+            <span class="eyebrow">{{ c.reference }} {% if c.source == 'dataset_import' %}<span class="badge bg-info text-dark">Dataset import</span>{% endif %}</span>
+            <h2 class="fw-bold">{{ c.title }}</h2>
+        </div>
+
+        <span class="status status-{{ c.status|lower|replace(' ','-') }}">
+            {{ c.status }}
+        </span>
+    </div>
+
+    <p class="text-secondary">
+        Submitted by {{ c.customer.name }} ·
+        {{ c.created_at.strftime('%d %b %Y %H:%M') }}
+    </p>
+
+    <p class="my-4">{{ c.description }}</p>
+
+    <div class="row g-3">
+        <div class="col-md-4">
+            <div class="metric">
+                <small>AI category suggestion</small>
+                <h5>{{ c.category_prediction }}</h5>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="metric">
+                <small>AI sentiment signal</small>
+                <h5>{{ c.sentiment_prediction }}</h5>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="metric">
+                <small>Final staff category</small>
+                <h5>{{ c.final_category }}</h5>
+            </div>
+        </div>
+    </div>
+
+    {% if c.response_note %}
+    <div class="alert alert-info mt-3">
+        <b>Latest response</b>
+        <br>
+        {{ c.response_note }}
+    </div>
+    {% endif %}
+</div>
+
+<!-- Status History -->
+<div class="surface p-4 mt-4">
+    <h5 class="fw-bold">Status history</h5>
+
+    {% for h in c.history|sort(attribute='created_at', reverse=true) %}
+    <div class="history-row">
+        <b>{{ h.status }}</b>
+
+        <small class="text-secondary">
+            {{ h.created_at.strftime('%d %b %Y %H:%M') }}
+            · {{ h.actor.name }}
+        </small>
+
+        <div>{{ h.note or '' }}</div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Staff and Admin Review -->
+{% if current_user.role in ['staff', 'admin'] %}
+
+<div class="form-card mt-4">
+    <h5 class="fw-bold">Review and update</h5>
+
+    <form method="post"
+          action="{{ url_for('update_complaint', complaint_id=c.id) }}">
+
+        <label class="form-label">Final category</label>
+
+        <select class="form-select mb-3" name="category" required>
+            {% for category in category_labels %}
+            <option value="{{ category }}"
+                {% if category == c.final_category %}selected{% endif %}>
+                {{ category }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <label class="form-label">Status</label>
+
+        <select class="form-select mb-3" name="status" required>
+            {% for s in ['Submitted', 'In Progress', 'Resolved'] %}
+            <option value="{{ s }}"
+                {% if s == c.status %}selected{% endif %}>
+                {{ s }}
+            </option>
+            {% endfor %}
+        </select>
+
+        {% if current_user.role == 'admin' %}
+
+        <label class="form-label">Assign to staff</label>
+
+        <select class="form-select mb-3" name="assigned_to">
+            <option value="">Unassigned</option>
+
+            {% for person in staff_users %}
+            <option value="{{ person.id }}"
+                {% if c.assigned_to == person.id %}selected{% endif %}>
+                {{ person.name }} · {{ person.department or 'General' }}
+            </option>
+            {% endfor %}
+        </select>
+
+        {% endif %}
+
+        <label class="form-label">Response note</label>
+
+        <textarea class="form-control mb-3"
+                  name="note"
+                  rows="3"
+                  placeholder="Update for the customer"></textarea>
+
+        <button class="btn btn-primary">Save update</button>
+
+    </form>
+</div>
+
+{% if current_user.role == 'admin' %}
+<form method="POST"
+      action="{{ url_for('delete_complaint', complaint_id=c.id) }}"
+      onsubmit="return confirm('Are you sure you want to permanently delete this complaint?');">
+
+    <button type="submit" class="btn btn-danger">
+        Delete Complaint
+    </button>
+
+</form>
+{% endif %}
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,193 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<span class="eyebrow">ADMINISTRATION</span>
+
+<h2 class="fw-bold mb-4">Manage staff and administrators</h2>
+
+<div class="row g-4">
+
+    <!-- Create Account Section -->
+
+    <div class="col-lg-5">
+
+        <div class="form-card">
+
+            <h5 class="fw-bold">Create account</h5>
+
+            <form method="post">
+
+                <label class="form-label">Name</label>
+
+                <input
+                    class="form-control mb-3"
+                    name="name"
+                    required
+                >
+
+                <label class="form-label">Email</label>
+
+                <input
+                    class="form-control mb-3"
+                    name="email"
+                    type="email"
+                    required
+                >
+
+                <label class="form-label">Temporary password</label>
+
+                <input
+                    class="form-control mb-3"
+                    name="password"
+                    type="password"
+                    minlength="8"
+                    required
+                >
+
+                <label class="form-label">Role</label>
+
+                <select class="form-select mb-3" name="role">
+
+                    <option value="staff">Staff</option>
+
+                    <option value="admin">Administrator</option>
+
+                </select>
+
+                <label class="form-label">Department</label>
+
+                <select class="form-select mb-3" name="department">
+
+                    <option value="">Not applicable</option>
+
+                    {% for d in departments %}
+
+                    <option value="{{ d }}">{{ d }}</option>
+
+                    {% endfor %}
+
+                </select>
+
+                <button class="btn btn-primary">
+                    Create account
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- Registered Users Section -->
+
+    <div class="col-lg-7">
+
+        <div class="surface p-3">
+
+            <h5 class="fw-bold">Registered users</h5>
+
+            <div class="table-responsive">
+
+                <table class="table align-middle">
+
+                    <thead>
+
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for u in users %}
+
+                        <tr>
+
+                            <td>{{ u.name }}</td>
+
+                            <td>{{ u.email }}</td>
+
+                            <td>{{ u.role|title }}</td>
+
+                            <td>
+
+                                {% if u.is_active %}
+
+                                <span class="badge bg-success">
+                                    Active
+                                </span>
+
+                                {% else %}
+
+                                <span class="badge bg-secondary">
+                                    Deactivated
+                                </span>
+
+                                {% endif %}
+
+                            </td>
+
+                            <td>
+
+                                {% if u.id != current_user.id and u.is_active %}
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for('remove_user', user_id=u.id) }}"
+                                    onsubmit="return confirm('Are you sure you want to deactivate this user?');"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-sm btn-danger"
+                                    >
+                                        Remove
+                                    </button>
+
+                                </form>
+
+                                {% else %}
+
+                                <span class="text-secondary small">
+                                    —
+                                </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                        {% else %}
+
+                        <tr>
+
+                            <td colspan="5" class="text-center text-secondary">
+                                No registered users found.
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
